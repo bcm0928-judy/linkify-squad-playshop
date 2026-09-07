@@ -1,0 +1,628 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>🎉 9/8(화) 링키파이 스쿼드 플레이샵</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --c-canvas: #f6f7f9;
+      --c-surface: #ffffff;
+      --c-line: #e4e7ec;
+      --c-border: #7f8998;
+      --c-text: #16191f;
+      --c-muted: #5b6474;
+      --c-brand: #2f5bd7;
+      --c-ok: #17795e;
+      --c-warn: #8a5a00;
+      --s1: 4px;
+      --s2: 8px;
+      --s3: 12px;
+      --s4: 16px;
+      --s5: 24px;
+      --s6: 40px;
+      --r-ctl: 6px;
+      --r-box: 10px;
+      --r-pill: 999px;
+      --f-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+      --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.12);
+      --ink: var(--c-text);
+      --muted: var(--c-muted);
+      --line: var(--c-line);
+      --paper: var(--c-canvas);
+      --surface: var(--c-surface);
+      --mint: #e8f6f1;
+      --teal: var(--c-brand);
+      --coral: #c0362c;
+      --blue: var(--c-brand);
+      --violet: #65558f;
+      --shadow: var(--shadow-md);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--f-sans);
+      letter-spacing: 0;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .page {
+      width: min(1120px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 28px 0 40px;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+      align-items: end;
+      padding: 18px 0 22px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0 0 14px;
+      color: var(--teal);
+      font-size: 14px;
+      font-weight: 800;
+    }
+
+    h1 {
+      margin: 0;
+      max-width: 760px;
+      font-size: clamp(32px, 4.4vw, 52px);
+      line-height: 1.02;
+      font-weight: 900;
+      letter-spacing: 0;
+    }
+
+    .subtitle {
+      max-width: 620px;
+      margin: 12px 0 0;
+      color: #40505f;
+      font-size: 15px;
+      line-height: 1.55;
+      word-break: keep-all;
+    }
+
+    .hero-panel {
+      padding: 22px;
+      border: 1px solid rgba(24, 32, 42, 0.12);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.74);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+    }
+
+    .meta-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .meta {
+      min-height: 92px;
+      padding: 14px;
+      border-radius: 8px;
+      background: #f6f9f8;
+      border: 1px solid rgba(24, 32, 42, 0.08);
+    }
+
+    .meta span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .meta strong {
+      display: block;
+      margin-top: 8px;
+      font-size: 22px;
+      line-height: 1.05;
+    }
+
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      justify-content: space-between;
+      margin: 0 0 14px;
+      padding: 10px 0;
+      border-top: 1px solid rgba(24, 32, 42, 0.12);
+      border-bottom: 1px solid rgba(24, 32, 42, 0.12);
+    }
+
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      min-height: 34px;
+      gap: 8px;
+      padding: 7px 11px;
+      border: 1px solid rgba(24, 32, 42, 0.12);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.72);
+      color: #40505f;
+      font-size: 13px;
+      font-weight: 750;
+    }
+
+    .dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--teal);
+    }
+
+    .dot.food { background: var(--coral); }
+    .dot.play { background: var(--blue); }
+    .dot.move { background: var(--violet); }
+
+    .timeline {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 0;
+    }
+
+    .item {
+      display: grid;
+      grid-template-columns: 92px minmax(0, 1fr);
+      gap: 12px;
+      align-items: stretch;
+    }
+
+    .time {
+      position: relative;
+      display: grid;
+      place-items: center;
+      min-height: 148px;
+      padding: 12px 8px;
+      border-radius: 8px;
+      color: #ffffff;
+      background: var(--teal);
+      box-shadow: none;
+      text-align: center;
+    }
+
+    .item.food .time { background: var(--coral); }
+    .item.play .time { background: var(--blue); }
+    .item.move {
+      display: grid;
+      grid-column: 1 / -1;
+      grid-template-columns: 92px minmax(0, 1fr);
+    }
+
+    .item.move .time {
+      min-height: 72px;
+      background: var(--violet);
+    }
+
+    .item.move .content {
+      display: flex;
+      align-items: center;
+      min-height: 72px;
+      background: #f1eef7;
+      border-color: #ddd5ec;
+      box-shadow: none;
+    }
+
+    .route-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      margin-top: 8px;
+      color: #5d4d7a;
+      font-size: 12px;
+      font-weight: 800;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    .time strong {
+      display: block;
+      font-size: 23px;
+      line-height: 1;
+      font-weight: 900;
+    }
+
+    .time span {
+      display: block;
+      margin-top: 6px;
+      font-size: 11px;
+      font-weight: 800;
+      opacity: 0.88;
+    }
+
+    .content {
+      display: block;
+      min-height: 148px;
+      padding: 16px;
+      border: 1px solid rgba(24, 32, 42, 0.11);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.86);
+      box-shadow: 0 8px 20px rgba(24, 32, 42, 0.06);
+    }
+
+    .item.move .content {
+      min-height: 0;
+      background: rgba(255, 255, 255, 0.62);
+      border-style: dashed;
+    }
+
+    .activity h2 {
+      margin: 0;
+      font-size: 19px;
+      line-height: 1.25;
+      letter-spacing: 0;
+    }
+
+    .activity p {
+      margin: 6px 0 0;
+      color: #4d5b68;
+      font-size: 13px;
+      line-height: 1.45;
+      word-break: keep-all;
+    }
+
+    .place-schedule {
+      display: grid;
+      gap: 6px;
+      margin-top: 12px;
+    }
+
+    .place-schedule p {
+      display: grid;
+      grid-template-columns: 92px minmax(0, 1fr);
+      gap: 8px;
+      align-items: baseline;
+      margin: 0;
+      padding-bottom: 6px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .place-schedule p:last-child {
+      padding-bottom: 0;
+      border-bottom: 0;
+    }
+
+    .place-schedule strong {
+      color: var(--c-brand);
+      font-size: 12px;
+      white-space: nowrap;
+    }
+
+    .place-schedule span {
+      grid-column: 2;
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .owner {
+      display: inline-flex;
+      align-items: center;
+      min-height: 30px;
+      margin-top: 10px;
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: var(--mint);
+      color: #176659;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .place {
+      display: grid;
+      align-content: center;
+      gap: 7px;
+      margin-top: 12px;
+      padding: 10px;
+      border-radius: 8px;
+      background: #f8fafb;
+      border: 1px solid rgba(24, 32, 42, 0.08);
+    }
+
+    .place-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .place-title strong {
+      min-width: 0;
+      font-size: 14px;
+      line-height: 1.25;
+      overflow-wrap: anywhere;
+    }
+
+    .kakao {
+      flex: 0 0 auto;
+      display: inline-grid;
+      place-items: center;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      text-decoration: none;
+    }
+
+    .kakao img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      border-radius: 8px;
+      object-fit: contain;
+    }
+
+    .address {
+      margin: 0;
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.4;
+      word-break: keep-all;
+    }
+
+    .address a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .address a:hover {
+      color: var(--c-brand);
+      text-decoration: underline;
+    }
+
+    .budget {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .budget-item {
+      padding: 16px;
+      border-radius: 8px;
+      border: 1px solid rgba(24, 32, 42, 0.1);
+      background: rgba(255, 255, 255, 0.68);
+    }
+
+    .budget-item span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .budget-item strong {
+      display: block;
+      margin-top: 8px;
+      font-size: 16px;
+    }
+
+    .source-note {
+      margin-top: 18px;
+      color: #6e7883;
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+    .route-note {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 12px;
+      padding: 10px 14px;
+      border-radius: 8px;
+      background: #f1eef7;
+      color: #5d4d7a;
+      font-size: 12px;
+      font-weight: 750;
+    }
+
+    @media (max-width: 860px) {
+      .hero,
+      .budget {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-panel {
+        order: -1;
+      }
+
+      .timeline {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .page {
+        width: min(100% - 22px, 1120px);
+        padding-top: 20px;
+      }
+
+      .hero { padding-top: 10px; }
+
+      .hero-panel,
+      .content {
+        padding: 16px;
+      }
+
+      .meta-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .activity h2 { font-size: 18px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="hero" aria-labelledby="page-title">
+      <div>
+        <p class="eyebrow">LINKIFY PLAYSHOP</p>
+        <h1 id="page-title">🎉 9/8(화) 링키파이 스쿼드 플레이샵</h1>
+        <p class="subtitle">점심, 보드게임, 볼링, 레이저 액티비티, 저녁까지 한눈에 따라갈 수 있게 정리한 타임테이블입니다.</p>
+      </div>
+    </section>
+
+    <nav class="toolbar" aria-label="범례">
+      <div class="legend">
+        <span class="chip"><i class="dot food"></i>식사</span>
+        <span class="chip"><i class="dot play"></i>액티비티</span>
+        <span class="chip"><i class="dot move"></i>이동</span>
+      </div>
+      <span class="chip">카카오맵: 노란 K 버튼</span>
+    </nav>
+
+    <section class="timeline" aria-label="타임테이블">
+      <article class="item food">
+        <div class="time">
+          <div>
+            <strong>10:50</strong>
+            <span>~ 14:20</span>
+          </div>
+        </div>
+        <div class="content">
+          <div class="activity">
+            <h2>🍽️ 라폴리아</h2>
+            <div class="place-schedule">
+              <p><strong>10:50</strong> 점심 장소로 집합</p>
+              <p><strong>11:00–12:30</strong> 점심식사 <span>앙상블 코스 · 대관</span></p>
+              <p><strong>12:30–14:20</strong> 보드게임 및 커피</p>
+            </div>
+          </div>
+          <div class="place">
+            <div class="place-title">
+              <strong>라폴리아</strong>
+              <a class="kakao" href="https://place.map.kakao.com/2144603270" target="_blank" rel="noopener" aria-label="라폴리아 카카오맵 상세페이지 열기"><img src="kakao-map-logo.png" alt="카카오맵"></a>
+            </div>
+            <p class="address"><a href="https://place.map.kakao.com/2144603270" target="_blank" rel="noopener">서울특별시 서초구 서초중앙로22길 122 1층</a></p>
+          </div>
+        </div>
+      </article>
+
+      <article class="item move">
+        <div class="time">
+          <div>
+            <strong>14:20</strong>
+            <span>도보 이동</span>
+          </div>
+        </div>
+        <div class="content">
+          <div class="activity">
+            <h2>🚶🏻‍♀️ 이동</h2>
+            <p>도보 약 3분 소요 예상.</p>
+            <a class="route-link" href="https://map.kakao.com/link/by/walk/2144603270/1998015020" target="_blank" rel="noopener">길찾기: 라폴리아 → 노블레스볼링장 ↗</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="item play">
+        <div class="time">
+          <div>
+            <strong>14:30</strong>
+            <span>~ 16:30</span>
+          </div>
+        </div>
+        <div class="content">
+          <div class="activity">
+            <h2>🎳 볼링</h2>
+            <p>5명씩 3레인으로 진행 · 예약금 3만원 선결제</p>
+          </div>
+          <div class="place">
+            <div class="place-title">
+              <strong>노블레스볼링장</strong>
+              <a class="kakao" href="https://place.map.kakao.com/1998015020" target="_blank" rel="noopener" aria-label="노블레스볼링장 카카오맵 상세페이지 열기"><img src="kakao-map-logo.png" alt="카카오맵"></a>
+            </div>
+            <p class="address"><a href="https://place.map.kakao.com/1998015020" target="_blank" rel="noopener">서울특별시 서초구 서초대로 350 지하 2층</a></p>
+          </div>
+        </div>
+      </article>
+
+      <article class="item move">
+        <div class="time">
+          <div>
+            <strong>16:30</strong>
+            <span>도보 이동</span>
+          </div>
+        </div>
+        <div class="content">
+          <div class="activity">
+            <h2>🚶🏻‍♀️ 이동</h2>
+            <p>도보 약 16분 소요 예상.</p>
+            <a class="route-link" href="https://map.kakao.com/link/by/walk/1998015020/1581283343" target="_blank" rel="noopener">길찾기: 노블레스볼링장 → 레이저아레나 ↗</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="item play">
+        <div class="time">
+          <div>
+            <strong>17:00</strong>
+            <span>~ 18:00</span>
+          </div>
+        </div>
+        <div class="content">
+          <div class="activity">
+            <h2>🎯 레이저 액티비티</h2>
+            <p>레이저 서바이벌과 실내 액티비티 진행.</p>
+          </div>
+          <div class="place">
+            <div class="place-title">
+              <strong>레이저아레나 강남점</strong>
+              <a class="kakao" href="https://place.map.kakao.com/1581283343" target="_blank" rel="noopener" aria-label="레이저아레나 강남점 카카오맵 상세페이지 열기"><img src="kakao-map-logo.png" alt="카카오맵"></a>
+            </div>
+            <p class="address"><a href="https://place.map.kakao.com/1581283343" target="_blank" rel="noopener">서울특별시 서초구 강남대로65길 12 지하 1층</a></p>
+          </div>
+        </div>
+      </article>
+
+      <article class="item food">
+        <div class="time">
+          <div>
+            <strong>18:00</strong>
+            <span>이후</span>
+          </div>
+        </div>
+        <div class="content">
+          <div class="activity">
+            <h2>🍜 저녁식사</h2>
+            <p>10명 예약.</p>
+          </div>
+          <div class="place">
+            <div class="place-title">
+              <strong>중식당 표량</strong>
+              <a class="kakao" href="https://place.map.kakao.com/873344333" target="_blank" rel="noopener" aria-label="표량 카카오맵 상세페이지 열기"><img src="kakao-map-logo.png" alt="카카오맵"></a>
+            </div>
+            <p class="address"><a href="https://place.map.kakao.com/873344333" target="_blank" rel="noopener">서울특별시 서초구 서운로 133 2층</a></p>
+          </div>
+        </div>
+      </article>
+    </section>
+
+  </main>
+</body>
+</html>
