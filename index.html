@@ -194,6 +194,10 @@
       align-items: stretch;
     }
 
+    .item:not(.move) {
+      grid-column: 1 / -1;
+    }
+
     .time {
       position: relative;
       display: grid;
@@ -257,7 +261,10 @@
     }
 
     .content {
-      display: block;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(280px, 0.65fr);
+      gap: 18px;
+      align-items: center;
       min-height: 148px;
       padding: 16px;
       border: 1px solid rgba(24, 32, 42, 0.11);
@@ -445,6 +452,10 @@
     @media (max-width: 860px) {
       .hero,
       .budget {
+        grid-template-columns: 1fr;
+      }
+
+      .content {
         grid-template-columns: 1fr;
       }
 
