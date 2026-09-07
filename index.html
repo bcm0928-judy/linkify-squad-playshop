@@ -84,11 +84,12 @@
 
     h1 {
       margin: 0;
-      max-width: 760px;
-      font-size: clamp(32px, 4.4vw, 52px);
+      max-width: none;
+      font-size: clamp(38px, 5.2vw, 64px);
       line-height: 1.02;
       font-weight: 900;
       letter-spacing: 0;
+      white-space: nowrap;
     }
 
     .subtitle {
@@ -457,6 +458,10 @@
 
       .content {
         grid-template-columns: 1fr;
+      }
+
+      h1 {
+        white-space: normal;
       }
 
       .hero-panel {
